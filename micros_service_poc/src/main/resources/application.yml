@@ -15,11 +15,11 @@ entitymanager.packagesToScan: com.customer.Entity
 application.version: 1.0
 spring.application.name: customerservice
 
+#logging
+logging.config: classpath:log4j2.xml
+
 #Eureka
 eureka:
   client:
     serviceUrl:
       defaultZone: http://tcs-poc-ms-eurekaserver-us-i2.us-east-1.elasticbeanstalk.com/eureka/
-      
-#Logging
-logging.config: classpath:logback.xml

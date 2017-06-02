@@ -6,8 +6,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -55,8 +55,8 @@ public class ManageCustomerController {
 	@Autowired
 	private CustomerMessageMapper messageMapper ;
 	
-	private static Logger log = LoggerFactory.getLogger(ManageCustomerController.class);
-	private static Logger reqRespLog =LoggerFactory.getLogger("REQRESP") ;
+	private static Logger log = LogManager.getLogger(ManageCustomerController.class);
+	private static Logger reqRespLog =LogManager.getLogger("REQRESP") ;
 
 	@RequestMapping(value = "/customers", method = RequestMethod.POST, headers = "Accept=application/json")
 	public @ResponseBody ResponseEntity<String> insertCustomerInfo(@RequestBody String customerRequst,

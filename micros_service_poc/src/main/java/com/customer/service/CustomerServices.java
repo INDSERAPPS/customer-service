@@ -1,25 +1,32 @@
 package com.customer.service;
 
+
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Random;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestTemplate;
 
 import com.customer.Entity.AppMetaData;
 import com.customer.Entity.BaseEntity;
 import com.customer.Entity.Customer;
 import com.customer.constants.CustomerConstants;
+
 import com.customer.exceptions.ApplicationException;
 import com.customer.message.CustomerGetRequest;
 import com.customer.message.CustomerInsertRequest;
 import com.customer.message.CustomerUpdateRequest;
+
 
 
 @Service
@@ -28,7 +35,10 @@ public class CustomerServices {
 	
 	private EntityManager entityManager;
 	static Random rnd = new Random();
-	private static Logger log = Logger.getLogger(CustomerServices.class);
+	private static Logger log = LogManager.getLogger(CustomerServices.class);
+	
+	@Autowired
+	private DiscoveryClient discoveryClient;
 
 	@PersistenceContext
 	public void setEntityManager(EntityManager entityManager) {
@@ -47,7 +57,7 @@ public class CustomerServices {
 		injectPersistenceContext() ;
 		Customer customer = new Customer() ;
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-		customer.setCustomerId(randomString(10)) ;
+		customer.setCustomerId(getCustUniqueId()) ;
 		customer.setName(customerInsetReq.getCustomerInsReqBody().getName());
 		customer.setEmail(customerInsetReq.getCustomerInsReqBody().getEmail()) ;
 		customer.setPassword(customerInsetReq.getCustomerInsReqBody().getPassword());
@@ -59,6 +69,7 @@ public class CustomerServices {
 		log.info("Inserted Customer details to database") ;
 		return customer.getCustomerId();
 		}catch(Exception e){
+			System.out.println(e.toString());
 			throw new ApplicationException(CustomerConstants.SERVER_ERROR,"Internal Server Error") ;
 			
 		}
@@ -71,7 +82,7 @@ public class CustomerServices {
                sb.append(testStr.charAt(rnd.nextInt(testStr.length())));
         return sb.toString();
  }
-
+	
 	public String updateCustomer(CustomerUpdateRequest custUpdateReq) throws ApplicationException {
 		
 		try{
@@ -157,6 +168,29 @@ public String fetchMetaData()
 {
 	injectPersistenceContext() ;
 	return AppMetaData.findSchemaVersion();
+}
+
+private String getCustUniqueId()
+{
+	RestTemplate restTemplate = new RestTemplate();
+	String customerId = null ;
+	ServiceInstance instance = null;
+	
+	List<ServiceInstance> instances = discoveryClient
+		    .getInstances("TCS-POC-MS-IDGENERATOR");
+		 if (instances != null && instances.size() > 0) {
+			 instance = instances.get(0);
+			
+			 System.out.println("host:"+instance.getHost());
+			 System.out.println("inside instance"+instances.size());
+			/* URI productUri = URI.create(String
+					   .format("http://%s:%s/idgenerator/ID?type=PR" +
+					    instance.getHost(), instance.getPort()));*/
+			 customerId = restTemplate.getForObject("http://52.60.195.160:8080/idgenerator/getID?type=PR", String.class);
+			 
+			 System.out.println("id:"+customerId);
+		 }
+		 return customerId ;
 }
 
 

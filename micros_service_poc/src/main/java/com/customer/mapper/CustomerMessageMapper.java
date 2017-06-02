@@ -2,9 +2,8 @@ package com.customer.mapper;
 
 import java.io.IOException;
 
-
-import org.apache.log4j.Logger;
-
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 
 import com.customer.constants.CustomerConstants;
@@ -33,8 +32,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class CustomerMessageMapper {
 	
 	private static ObjectMapper jacksonMapper = new ObjectMapper();
-	private static Logger log = Logger.getLogger(CustomerMessageMapper.class);
-	private static Logger reqRespLog =Logger.getLogger("REQRESP") ;
+	private static Logger log = LogManager.getLogger(CustomerMessageMapper.class);
+	private static Logger reqRespLog =LogManager.getLogger("REQRESP") ;
 	
 	public CustomerInsertRequest convertJSONtoInsertReq(String customerReq,MessageRequestHeader reqHeader) throws ApplicationException
 	{
