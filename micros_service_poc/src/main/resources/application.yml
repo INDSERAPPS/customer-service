@@ -23,3 +23,8 @@ eureka:
   client:
     serviceUrl:
       defaultZone: http://tcs-poc-ms-eurekaserver-us-i2.us-east-1.elasticbeanstalk.com/eureka/
+      
+ #Ribbon
+TCS-POC-MS-IDGENERATOR:
+  ribbon:
+    ServerListRefreshInterval: 10

@@ -18,6 +18,7 @@ import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+import org.springframework.cloud.netflix.ribbon.RibbonClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -46,6 +47,7 @@ import org.springframework.web.client.RestTemplate;
 @ImportResource({"classpath:servlet-context.xml"})
 @EnableTransactionManagement
 @SpringBootApplication
+@RibbonClient(name = "TCS-POC-MS-IDGENERATOR", configuration = RibbonConfig.class)
 public class CustomerManage extends SpringBootServletInitializer {
 
 	@Autowired

@@ -13,6 +13,8 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
@@ -37,8 +39,9 @@ public class CustomerServices {
 	static Random rnd = new Random();
 	private static Logger log = LogManager.getLogger(CustomerServices.class);
 	
+	
 	@Autowired
-	private DiscoveryClient discoveryClient;
+	RestTemplate restTemplate;
 
 	@PersistenceContext
 	public void setEntityManager(EntityManager entityManager) {
@@ -172,28 +175,32 @@ public String fetchMetaData()
 
 private String getCustUniqueId()
 {
-	RestTemplate restTemplate = new RestTemplate();
+	
 	String customerId = null ;
 	ServiceInstance instance = null;
 	
-	List<ServiceInstance> instances = discoveryClient
+	/*List<ServiceInstance> instances = discoveryClient
 		    .getInstances("TCS-POC-MS-IDGENERATOR");
 		 if (instances != null && instances.size() > 0) {
 			 instance = instances.get(0);
 			
 			 System.out.println("host:"+instance.getHost());
-			 System.out.println("inside instance"+instances.size());
+			 System.out.println("inside instance"+instances.size());*/
 			/* URI productUri = URI.create(String
 					   .format("http://%s:%s/idgenerator/ID?type=PR" +
 					    instance.getHost(), instance.getPort()));*/
-			 customerId = restTemplate.getForObject("http://52.60.195.160:8080/idgenerator/getID?type=PR", String.class);
+			 customerId = restTemplate.getForObject("http://tcs-poc-ms-idgenerator/ID?type=PR", String.class);
 			 
 			 System.out.println("id:"+customerId);
-		 }
+		 
 		 return customerId ;
 }
 
-
+@LoadBalanced
+@Bean
+RestTemplate restTemplate() {
+	return new RestTemplate();
+}
 
 
 
