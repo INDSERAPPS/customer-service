@@ -27,4 +27,7 @@ eureka:
  #Ribbon
 TCS-POC-MS-IDGENERATOR:
   ribbon:
-    ServerListRefreshInterval: 10
+    eureka:
+      enabled: true
+    
+    ServerListRefreshInterval: 15000

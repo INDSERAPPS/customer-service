@@ -114,9 +114,16 @@
 
 
 <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-netflix-core -->
-<dependency>
+<!-- <dependency>
     <groupId>org.springframework.cloud</groupId>
     <artifactId>spring-cloud-netflix-core</artifactId>
+    <version>1.3.1.RELEASE</version>
+</dependency> -->
+
+<!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-ribbon -->
+<dependency>
+    <groupId>org.springframework.cloud</groupId>
+    <artifactId>spring-cloud-starter-ribbon</artifactId>
     <version>1.3.1.RELEASE</version>
 </dependency>
 

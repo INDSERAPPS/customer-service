@@ -42,6 +42,9 @@ public class CustomerServices {
 	
 	@Autowired
 	RestTemplate restTemplate;
+	
+	@Autowired
+	DiscoveryClient discoveryClient ;
 
 	@PersistenceContext
 	public void setEntityManager(EntityManager entityManager) {
@@ -179,28 +182,34 @@ private String getCustUniqueId()
 	String customerId = null ;
 	ServiceInstance instance = null;
 	
-	/*List<ServiceInstance> instances = discoveryClient
+	List<ServiceInstance> instances = discoveryClient
 		    .getInstances("TCS-POC-MS-IDGENERATOR");
 		 if (instances != null && instances.size() > 0) {
 			 instance = instances.get(0);
 			
 			 System.out.println("host:"+instance.getHost());
-			 System.out.println("inside instance"+instances.size());*/
+			 System.out.println("inside instance"+instance.getUri());
+			 
+		 }
 			/* URI productUri = URI.create(String
 					   .format("http://%s:%s/idgenerator/ID?type=PR" +
 					    instance.getHost(), instance.getPort()));*/
-			 customerId = restTemplate.getForObject("http://tcs-poc-ms-idgenerator/ID?type=PR", String.class);
+		// String custId1 = restTemplate.getForObject("http://ec2-52-87-243-207.compute-1.amazonaws.com:8080/idgenerator/ID?type=PR", String.class);
+		 //System.out.println("ID:"+custId1);
+		 System.out.println("String URL: "+instance.getUri()+"/idgenerator/ID?type=PR");
+			 customerId = restTemplate.getForObject("http://TCS-POC-MS-IDGENERATOR/idgenerator/ID?type=PR", String.class);
+			 
 			 
 			 System.out.println("id:"+customerId);
 		 
 		 return customerId ;
 }
 
-@LoadBalanced
+/*@LoadBalanced
 @Bean
 RestTemplate restTemplate() {
 	return new RestTemplate();
-}
+}*/
 
 
 

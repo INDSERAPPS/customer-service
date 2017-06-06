@@ -17,6 +17,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.netflix.ribbon.RibbonClient;
 import org.springframework.context.annotation.Bean;
@@ -71,6 +72,7 @@ public class CustomerManage extends SpringBootServletInitializer {
 
 	}
 	
+	@LoadBalanced
 	@Bean
 	public RestTemplate restTemplate(RestTemplateBuilder builder) {
 		return builder.build();
