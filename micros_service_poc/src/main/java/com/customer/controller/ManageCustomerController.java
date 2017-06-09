@@ -78,9 +78,10 @@ public class ManageCustomerController {
 				try {
 			
 			CustomerInsertRequest customerInsertReq = messageMapper.convertJSONtoInsertReq(customerRequst,reqHeader);
-			
+			System.out.println("before validation");
 		if(custReqVal.validateCustomerInsertRequest(customerInsertReq).equals("success"))
 		{
+			
 			String customerId = custServices.insertCustomer(customerInsertReq);
 			log.info("Set Response Headers") ;
 			respHeaders = setRespHeaders(tocken) ;
@@ -89,10 +90,12 @@ public class ManageCustomerController {
 			return new ResponseEntity (customerResponse,respHeaders,HttpStatus.OK) ;
 		}
 		}catch (ApplicationException e) {
+		
 			log.info("Set Response Headers") ;
 			respHeaders = setRespHeaders(tocken) ;
 			String customerResponse = buildCustomerInsertErrorResponse(customerInsertResp,e,receivedTime);
 			displayResponseInLogger(respHeaders,customerResponse) ;
+			
 			return new ResponseEntity(customerResponse,respHeaders,HttpStatus.OK);
 			
 		} catch (IOException e) {

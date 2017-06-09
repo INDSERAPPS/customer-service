@@ -5,7 +5,7 @@ public class CustomerConstants {
 	public static final int HTTP_SUCCESS_CODE =20 ;
 	public static final int RE_DIR_INFO_CODE =30;
 	public static final int CLIENT_ERROR =40;
-	public static final int SERVER_ERROR =50;
+	public static final int SERVER_ERROR =500;
 	public static final int NOT_ALL_MAND_FIELD_PRESENT =700;
 	public static final int NULL_MAND_FIELD_VALUE =711;
 	public static final int CONFLICT_COND_INPUTS =712;
