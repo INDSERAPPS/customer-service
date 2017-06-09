@@ -161,9 +161,9 @@ public class CustomerRequstValidator {
 		}
 		}
 		
-		if(custUpdateReq.getCustomerUpdateReqBody().getCustomerId().length()!=10)
+		if(custUpdateReq.getCustomerUpdateReqBody().getCustomerId().length()!=17)
 		{
-			log.error("Name should be a string with length 10  ") ;
+			log.error("Name should be a string with length 17  ") ;
 			throw new ApplicationException(CustomerConstants.INVALID_CUST_ID,"Name should be a string with length 10  ") ;
 		}
 		
@@ -195,10 +195,10 @@ public class CustomerRequstValidator {
 				}
 		if(custGetReq.getCustomerGetReqBody().getCustomerid()!=null)
 				{
-			if(custGetReq.getCustomerGetReqBody().getCustomerid().length()!=10)
+			if(custGetReq.getCustomerGetReqBody().getCustomerid().length()!=17)
 			{
-				log.error("Length of customer id is not 10 ") ;
-				throw new ApplicationException(CustomerConstants.INVALID_CUST_ID,"Length of customer id is not 10 ") ;
+				log.error("Length of customer id is not 17 ") ;
+				throw new ApplicationException(CustomerConstants.INVALID_CUST_ID,"Length of customer id is not 17 ") ;
 			}
 			if(custServices.fetchCustomer(custGetReq.getCustomerGetReqBody().getCustomerid())==null)
 			{
