@@ -20,9 +20,13 @@ logging.config: classpath:log4j2.xml
 
 #Eureka
 eureka:
+  instance:
+    leaseRenewalIntervalInSeconds: 1
+    leaseExpirationDurationInSeconds: 2
   client:
     serviceUrl:
-      defaultZone: http://tcs-poc-ms-eurekaserver-us-i2.us-east-1.elasticbeanstalk.com/eureka/
+      defaultZone: http://tcs-poc-ms-eurekaserver.com/eureka
+    
       
  #Ribbon
 TCS-POC-MS-IDGENERATOR:

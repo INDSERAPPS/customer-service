@@ -14,6 +14,8 @@ import org.springframework.web.context.WebApplicationContext;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import java.util.Random;
+
 import com.customer.main.CustomerManage;
 import com.customer.message.CustomerInsertRequestBody;
 import com.customer.message.CustomerUpdateRequestBody;
@@ -28,6 +30,7 @@ public class CustomerManageTests {
 	
 	
 	private static ObjectMapper jacksonMapper = new ObjectMapper();
+	static Random rnd = new Random();
 	
 	@Autowired
 	private WebApplicationContext webApplicationContext;
@@ -44,9 +47,9 @@ public class CustomerManageTests {
 	{
 		CustomerInsertRequestBody custInsertReqBody = new CustomerInsertRequestBody();
 		custInsertReqBody.setAccountType("S");
-		custInsertReqBody.setEmail("helloint@tcs.com");
+		custInsertReqBody.setEmail("helloint2@tcs.com");
 		custInsertReqBody.setIsEnabled("true");
-		custInsertReqBody.setName("ABCD TEST Junit");
+		custInsertReqBody.setName("ABCD TEST Junitdecond");
 		custInsertReqBody.setPassword("uniqueoktestneeded");
 		
 		HttpHeaders httpHeader = createHeaders();
@@ -59,7 +62,7 @@ public class CustomerManageTests {
 	@Test
 	public void testCustomerUpdateSuccess() throws Exception
 	{
-		String pwd ="qwerttyyuio1234" ;
+		String pwd =randomString(12);
 		CustomerUpdateRequestBody custUpdateReqBody = new CustomerUpdateRequestBody();
 		custUpdateReqBody.setCustomerId("PRYMR9hm74Y2WNYA2");
 		custUpdateReqBody.setPassword(pwd);
@@ -68,7 +71,7 @@ public class CustomerManageTests {
 		HttpHeaders httpHeader = createHeaders();
 		
 		mockMvc.perform(put("/v1.1/customers").headers(httpHeader).content(customerUpdateRequestBody))
-		.andExpect(jsonPath("$.password").value(pwd));
+		.andExpect(jsonPath("$.respStatus.status").value("SUCCESS"));
 	}
 	
 	public HttpHeaders createHeaders()
@@ -82,5 +85,14 @@ public class CustomerManageTests {
 		
 		return httpHeader ;
 	}
+	
+	String randomString(int len) {
+		
+		String testStr ="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789" ;
+        StringBuilder sb = new StringBuilder(len);
+        for (int i = 0; i < len; i++)
+               sb.append(testStr.charAt(rnd.nextInt(testStr.length())));
+        return sb.toString();
+ }
 
 }
