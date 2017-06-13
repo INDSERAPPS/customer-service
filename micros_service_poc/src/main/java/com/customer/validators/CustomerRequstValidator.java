@@ -142,6 +142,12 @@ public class CustomerRequstValidator {
 				log.error("Email with invalid characters") ;
 				throw new ApplicationException(CustomerConstants.INVALID_EMAIL,"Email with invalid characters  ") ;
 			}
+			if(custServices.checkCustomerExist(custUpdateReq.getCustomerUpdateReqBody().getEmail()).equals("false"))
+			{
+				
+				log.error("e-Mail already exist in the system") ;
+				throw new ApplicationException(CustomerConstants.EMAIL_ALREADY_EXIST,"e-Mail already exist in the system ") ;
+			}
 		}
 		if(custUpdateReq.getCustomerUpdateReqBody().getPassword()!=null)
 		{
