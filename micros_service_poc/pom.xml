@@ -163,7 +163,7 @@
 	   <plugin>
 		<groupId>org.wildfly.plugins</groupId>
 		<artifactId>wildfly-maven-plugin</artifactId>
-		<version>1.1.0.Final</version>
+		<version>1.1.0.Alpha10</version>
 		       <configuration>
                     <id>${wildfly-id}</id>
                     <hostname>${wildfly-hostname}</hostname>
